@@ -51,10 +51,8 @@ const App: React.FC = () => {
   };
 
   const startGame = () => {
-    if (!playerX || !playerO) {
-      alert("Please enter both player names!");
-      return;
-    }
+    setPlayerX(playerX.trim() || "Player X");
+    setPlayerO(playerO.trim() || "Player O");
     setGameStarted(true);
   };
 

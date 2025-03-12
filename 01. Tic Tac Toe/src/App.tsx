@@ -124,7 +124,16 @@ const App: React.FC = () => {
             {winner && (
               <div className="winner-message">
                 <h2>{winner === "X" ? playerX : playerO} Wins! 🎉</h2>
-                <button onClick={() => window.location.reload()}>
+                <button
+                  onClick={() => {
+                    setState(Array(9).fill(null)); // Reset game board
+                    setCurrentTurn("X"); // Reset turn
+                    setWinner(null); // Clear winner
+                    setGameStarted(false); // Return to name input screen
+                    setPlayerX(""); // Clear player X name
+                    setPlayerO(""); // Clear player O name
+                  }}
+                >
                   Restart Game
                 </button>
               </div>

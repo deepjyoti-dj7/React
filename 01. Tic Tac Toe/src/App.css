@@ -14,9 +14,10 @@ body {
   text-align: center;
   background: rgba(255, 255, 255, 0.9);
   padding: 20px;
-  border-radius: 12px;
+  padding-bottom: 40px;
+  border-radius: 50px;
   box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
-  width: 700px;
+  width: 500px;
   max-width: 90%;
   transition: all 0.3s ease;
   backdrop-filter: blur(8px);
@@ -27,7 +28,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  width: 300px;
   max-width: 100%;
   margin: 0 auto;
 }
@@ -44,7 +45,7 @@ input {
   padding: 12px;
   margin: 8px;
   width: 90%;
-  border: 2px solid #007bff;
+  border: 2px solid #2e3032;
   border-radius: 6px;
   font-size: 16px;
   outline: none;
@@ -63,17 +64,17 @@ input:focus {
 }
 
 .block {
-  width: 150px;
-  height: 150px;
-  margin: 20px;
-  font-size: 69px;
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  font-size: 50px;
   font-weight: bold;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f8f9fa;
-  border: 3px solid #007bff;
-  border-radius: 8px;
+  border: 3px solid #2e3032;
+  border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
 }
@@ -188,7 +189,7 @@ button:active {
 .dark input {
   background: #333;
   color: white;
-  border: 2px solid #007bff;
+  border: 2px solid #e7f3ff;
 }
 
 .dark input::placeholder {
@@ -202,7 +203,7 @@ button:active {
 .dark .block {
   background: #444;
   color: white;
-  border: 3px solid #007bff;
+  border: 3px solid #e7f3ff;
 }
 
 .dark .block:hover {

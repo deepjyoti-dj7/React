@@ -5,11 +5,10 @@ import Block from "./components/Block";
 function App() {
   const [state, setState] = useState(Array(9).fill(null));
   const [currentTurn, setCurrentTurn] = useState("X");
-
-  console.log(state);
+  const [winner, setWinner] = useState<string | null>(null); // ✅ Track the winner
 
   const checkWinner = (state: any[]) => {
-    const win = [
+    const winPatterns = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -19,31 +18,36 @@ function App() {
       [0, 4, 8],
       [2, 4, 6],
     ];
-    for (let i = 0; i < win.length; i++) {
-      const [a, b, c] = win[i];
-      if (state[a] === state[b] && state[a] === state[c] && state[a] != null)
-        return true;
+
+    for (let i = 0; i < winPatterns.length; i++) {
+      const [a, b, c] = winPatterns[i];
+      if (state[a] === state[b] && state[a] === state[c] && state[a] != null) {
+        return state[a];
+      }
     }
-    return false;
+    return null;
   };
 
   const handleBlockClick = (index: number) => {
+    if (state[index] != null || winner) return;
+
     const stateCopy = [...state];
-    if (stateCopy[index] != null) return;
     stateCopy[index] = currentTurn;
-
     setState(stateCopy);
-    setCurrentTurn(currentTurn === "X" ? "O" : "X");
 
-    let win = checkWinner(stateCopy);
-    if (win) alert(`${currentTurn} WON !!!`);
-    console.log(win);
-    win = false;
-    console.log(win);
+    const win = checkWinner(stateCopy);
+    if (win) {
+      setWinner(win);
+      setTimeout(() => alert(`${win} WON !!!`), 100);
+    } else {
+      setCurrentTurn(currentTurn === "X" ? "O" : "X");
+    }
   };
 
   return (
     <div className="board">
+      <h2>{winner ? `${winner} Wins!` : `Current Turn: ${currentTurn}`}</h2>{" "}
+      {/* ✅ Display winner message */}
       <div className="row">
         <Block onClick={() => handleBlockClick(0)} value={state[0]} />
         <Block onClick={() => handleBlockClick(1)} value={state[1]} />
@@ -59,6 +63,10 @@ function App() {
         <Block onClick={() => handleBlockClick(7)} value={state[7]} />
         <Block onClick={() => handleBlockClick(8)} value={state[8]} />
       </div>
+      {winner && (
+        <button onClick={() => window.location.reload()}>Restart</button>
+      )}{" "}
+      {/* ✅ Restart button appears after win */}
     </div>
   );
 }

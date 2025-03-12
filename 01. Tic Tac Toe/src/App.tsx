@@ -1,10 +1,33 @@
-import Block from "./components/Block";
 import "./App.css";
+import { useState } from "react";
+import Block from "./components/Block";
 
 function App() {
+  const [state, setState] = useState(Array(9).fill(null));
+  const [currentTurn, setCurrentTurn] = useState("X");
+  console.log(state);
+
+  const handleBlockClick = (index: number) => {
+    console.log(index);
+  };
+
   return (
     <div className="board">
-      <Block />
+      <div className="row">
+        <Block onClick={() => handleBlockClick(0)} value={state[0]} />
+        <Block onClick={() => handleBlockClick(1)} value={state[1]} />
+        <Block onClick={() => handleBlockClick(2)} value={state[2]} />
+      </div>
+      <div className="row">
+        <Block onClick={() => handleBlockClick(3)} value={state[3]} />
+        <Block onClick={() => handleBlockClick(4)} value={state[4]} />
+        <Block onClick={() => handleBlockClick(5)} value={state[5]} />
+      </div>
+      <div className="row">
+        <Block onClick={() => handleBlockClick(6)} value={state[6]} />
+        <Block onClick={() => handleBlockClick(7)} value={state[7]} />
+        <Block onClick={() => handleBlockClick(8)} value={state[8]} />
+      </div>
     </div>
   );
 }

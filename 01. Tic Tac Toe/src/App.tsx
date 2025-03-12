@@ -8,7 +8,7 @@ function App() {
 
   console.log(state);
 
-  const checkWinner = () => {
+  const checkWinner = (state: any[]) => {
     const win = [
       [0, 1, 2],
       [3, 4, 5],
@@ -21,23 +21,25 @@ function App() {
     ];
     for (let i = 0; i < win.length; i++) {
       const [a, b, c] = win[i];
-      if (state[a] === state[b] && state[a] === state[c]) return true;
+      if (state[a] === state[b] && state[a] === state[c] && state[a] != null)
+        return true;
     }
     return false;
   };
 
   const handleBlockClick = (index: number) => {
-    const stateCopy = Array.from(state);
+    const stateCopy = [...state];
+    if (stateCopy[index] != null) return;
     stateCopy[index] = currentTurn;
 
-    const win = checkWinner();
-
-    if (win) {
-      alert("You WON !!!");
-    }
-
-    setCurrentTurn(currentTurn === "X" ? "O" : "X");
     setState(stateCopy);
+    setCurrentTurn(currentTurn === "X" ? "O" : "X");
+
+    let win = checkWinner(stateCopy);
+    if (win) alert(`${currentTurn} WON !!!`);
+    console.log(win);
+    win = false;
+    console.log(win);
   };
 
   return (

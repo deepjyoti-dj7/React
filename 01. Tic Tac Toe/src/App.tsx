@@ -8,7 +8,7 @@ const App: React.FC = () => {
   const [winner, setWinner] = useState<string | null>(null);
   const [playerX, setPlayerX] = useState<string>("");
   const [playerO, setPlayerO] = useState<string>("");
-  const [gameStarted, setGameStarted] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState<boolean>(false); // game state
   const [darkMode, setDarkMode] = useState<boolean>(false); // Dark mode state
 
   // Ref for player O input field

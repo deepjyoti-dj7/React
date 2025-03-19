@@ -6,8 +6,8 @@ const App: React.FC = () => {
   const [state, setState] = useState<(string | null)[]>(Array(9).fill(null));
   const [currentTurn, setCurrentTurn] = useState<"X" | "O">("X");
   const [winner, setWinner] = useState<string | null>(null);
-  const [playerX, setPlayerX] = useState<string>("");
-  const [playerO, setPlayerO] = useState<string>("");
+  const [playerX, setPlayerX] = useState<string>(""); // playerX state
+  const [playerO, setPlayerO] = useState<string>(""); // playerO state
   const [gameStarted, setGameStarted] = useState<boolean>(false); // game state
   const [darkMode, setDarkMode] = useState<boolean>(false); // Dark mode state
 

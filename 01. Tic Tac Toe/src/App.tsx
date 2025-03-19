@@ -4,7 +4,7 @@ import Block from "./components/Block";
 
 const App: React.FC = () => {
   const [state, setState] = useState<(string | null)[]>(Array(9).fill(null));
-  const [currentTurn, setCurrentTurn] = useState<"X" | "O">("X");
+  const [currentTurn, setCurrentTurn] = useState<"X" | "O">("X"); // turn state
   const [winner, setWinner] = useState<string | null>(null); // winner state
   const [playerX, setPlayerX] = useState<string>(""); // playerX state
   const [playerO, setPlayerO] = useState<string>(""); // playerO state

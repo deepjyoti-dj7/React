@@ -129,7 +129,7 @@ const App: React.FC = () => {
                     setState(Array(9).fill(null)); // Reset game board
                     setCurrentTurn("X"); // Reset turn
                     setWinner(null); // Clear winner
-                    setGameStarted(false); // Return to name input screen
+                    setGameStarted(false); // Return to input name screen
                     setPlayerX(""); // Clear player X name
                     setPlayerO(""); // Clear player O name
                   }}

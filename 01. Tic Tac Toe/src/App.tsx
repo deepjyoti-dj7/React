@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [gameStarted, setGameStarted] = useState<boolean>(false); // game state
   const [darkMode, setDarkMode] = useState<boolean>(false); // Dark mode state
 
-  // Ref for player O input field
+  // Reference for player O input field
   const playerORef = useRef<HTMLInputElement>(null);
 
   const checkWinner = (state: (string | null)[]): string | null => {

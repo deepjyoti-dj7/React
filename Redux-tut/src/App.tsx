@@ -1,7 +1,55 @@
+import React from "react";
 import { useAppDispatch, useAppSelector } from "./redux/hooks";
 import { increment, decrement } from "./redux/slices/counter";
 import { addToCart, removeFromCart, clearCart } from "./redux/slices/cart";
 import { toggleTheme } from "./redux/slices/theme";
+import "./App.css";
+
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+
+const PRODUCTS: Product[] = [
+  { id: 1, name: "Laptop", price: 999 },
+  { id: 2, name: "Mobile", price: 499 },
+  { id: 3, name: "Tablet", price: 299 },
+];
+
+const ProductButton = ({
+  product,
+  onAdd,
+  className,
+}: {
+  product: Product;
+  onAdd: (p: Product) => void;
+  className?: string;
+}) => (
+  <button
+    className={className ?? "productButton"}
+    onClick={() => onAdd(product)}
+  >
+    {`Add ${product.name}`}
+  </button>
+);
+
+const CartItem = ({
+  item,
+  onRemove,
+}: {
+  item: Product;
+  onRemove: (id: number) => void;
+}) => (
+  <li className="cartItem" key={item.id}>
+    <span>
+      {item.name} (${item.price})
+    </span>
+    <button className="removeButton" onClick={() => onRemove(item.id)}>
+      Remove
+    </button>
+  </li>
+);
 
 function App() {
   const dispatch = useAppDispatch();
@@ -9,71 +57,61 @@ function App() {
   const cart = useAppSelector((state) => state.cart);
   const theme = useAppSelector((state) => state.theme);
 
-  const handleAddProduct = (product: {
-    id: number;
-    name: string;
-    price: number;
-  }) => {
-    dispatch(addToCart(product));
-  };
+  const handleAddProduct = React.useCallback(
+    (product: Product) => {
+      dispatch(addToCart(product));
+    },
+    [dispatch]
+  );
 
   return (
-    <div
-      style={{
-        background: theme === "dark" ? "#222" : "#fff",
-        color: theme === "dark" ? "#fff" : "#000",
-        padding: "20px",
-        fontFamily: "Arial",
-      }}
-    >
-      <h1>Theme: {theme}</h1>
-      <button onClick={() => dispatch(toggleTheme())}>Toggle Theme</button>
+    <div className={`container ${theme === "dark" ? "dark" : "light"}`}>
+      <h1 className="heading">Theme: {theme}</h1>
+      <button className="toggleButton" onClick={() => dispatch(toggleTheme())}>
+        Toggle Theme
+      </button>
 
-      <hr />
+      <hr className="divider" />
 
-      <h1>Count is {count}</h1>
-      <button onClick={() => dispatch(increment())}>Increment</button>
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
-
-      <hr />
-
-      <h2>Cart</h2>
-      <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-        <button
-          onClick={() =>
-            handleAddProduct({ id: 1, name: "Laptop", price: 999 })
-          }
-        >
-          Add Laptop
+      <h1 className="heading">Count is {count}</h1>
+      <div className="counterButtons">
+        <button className="actionButton" onClick={() => dispatch(increment())}>
+          Increment
         </button>
-        <button
-          onClick={() =>
-            handleAddProduct({ id: 2, name: "Mobile", price: 499 })
-          }
-        >
-          Add Mobile
+        <button className="actionButton" onClick={() => dispatch(decrement())}>
+          Decrement
         </button>
+      </div>
+
+      <hr className="divider" />
+
+      <h2 className="heading">Cart</h2>
+      <div className="productButtonsContainer">
+        {PRODUCTS.map((product) => (
+          <ProductButton
+            key={product.id}
+            product={product}
+            onAdd={handleAddProduct}
+          />
+        ))}
         <button
-          onClick={() =>
-            handleAddProduct({ id: 3, name: "Tablet", price: 299 })
-          }
+          className="productButton clearCartButton"
+          onClick={() => dispatch(clearCart())}
         >
-          Add Tablet
+          Clear Cart
         </button>
-        <button onClick={() => dispatch(clearCart())}>Clear Cart</button>
       </div>
 
       {cart.length === 0 ? (
-        <p>No items in cart</p>
+        <p className="emptyCartText">No items in cart</p>
       ) : (
-        <ul>
+        <ul className="cartList">
           {cart.map((item) => (
-            <li key={`${item.id}-${Math.random()}`}>
-              {item.name} (${item.price}){" "}
-              <button onClick={() => dispatch(removeFromCart(item.id))}>
-                Remove
-              </button>
-            </li>
+            <CartItem
+              key={item.id}
+              item={item}
+              onRemove={(id) => dispatch(removeFromCart(id))}
+            />
           ))}
         </ul>
       )}
